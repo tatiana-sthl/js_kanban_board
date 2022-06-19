@@ -9,16 +9,16 @@ export default class KanbanAPI {
         return column.items;
     }
 
-    static insertItems(columnId, content) {
+    static insertItem(columnId, content) {
         const data = read();
         const column = data.find(column => column.id == columnId);
         const item = {
-            id: Math.floor(Math.random() * 1000),
+            id: Math.floor(Math.random() * 100000),
             content
         };
 
         if (!column) {
-            throw new Error("Column does not exist");
+            throw new Error("Column does not exist.");
         }
 
         column.items.push(item);
@@ -27,11 +27,56 @@ export default class KanbanAPI {
         return item;
     }
 
-    static updateItems(itemId, newProps) {
+    static updateItem(itemId, newProps) {
         const data = read();
         const [item, currentColumn] = (() => {
-            return [1, 2]
+            for (const column of data) {
+                const item = column.items.find(item => item.id == itemId);
+
+                if (item) {
+                    return [item, column];
+                }
+            }
         })();
+
+        if (!item) {
+            throw new Error("Item not found.");
+        }
+
+        item.content = newProps.content === undefined ? item.content : newProps.content;
+
+        if (
+            newProps.columnId !== undefined
+            && newProps.position !== undefined
+        ) {
+            const targetColumn = data.find(column => column.id == newProps.columnId);
+
+            if (!targetColumn) {
+                throw new Error('Target column not found.');
+            }
+
+            //Remove item from his current column and position
+            currentColumn.items.splice(currentColumn.items.indexOf(item), 1);
+
+            //Move item into his new column and position
+            targetColumn.items.splice(newProps.position, 0, item);
+        }
+
+        save(data);
+    }
+
+    static deleteItem(itemId) {
+        const data = read();
+
+        for (const column of data) {
+            const item = column.items.find(item => item.id == itemId);
+
+            if (item) {
+                column.items.splice(column.items.indexOf(item), 1);            
+            }
+        }
+
+        save(data);
     }
 }
 
