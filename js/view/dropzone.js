@@ -28,8 +28,8 @@ export default class DropZone {
             const dropZonesInColumn = Array.from(columnElement.querySelectorAll(".kanban__dropzone"));
             const droppedIndex = dropZonesInColumn.indexOf(dropZone);
             const itemId = Number(e.dataTransfer.getData("text/plain"));
-            const droppedItemElement = document.querySelector(`[data-id="${itemId}]`);
-            const insertAfter = dropZone.parentElement.classList.containe("kanban_item") ? dropZone.parentElement : dropZone;
+            const droppedItemElement = document.querySelector(`[data-id="${itemId}"]`);
+            const insertAfter = dropZone.parentElement.classList.contains("kanban__item") ? dropZone.parentElement : dropZone;
 
             if (droppedItemElement.contains(dropZone)) {
                 return;

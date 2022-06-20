@@ -1,8 +1,14 @@
+html {
+    display: flex;
+    justify-content: center;
+    background: url(./witch_office.jpg);
+}
+
 .kanban {
     display: flex;
     padding: 30px;
-    width: 1000px;
-    background: #009578;
+    width: 1500px;
+    background: #dd6d89dc;
     border-radius: 5px;
 }
 
@@ -19,9 +25,11 @@
 }
 
 .kanban__column-title {
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
     font-size: 30px;
-    color: white;
+    color: rgb(255, 255, 255);
     user-select: none;
 }
 
@@ -48,8 +56,8 @@
     padding: 10px 0;
     font-size: 16px;
     color: white;
-    background: rgba(0, 0, 0, 0.1);
-    border: none;
+    background: rgba(207, 162, 141, 0.836);
     border-radius: 5px;
+    border: none;
     cursor: pointer;
 }
